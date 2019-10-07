@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JQuery-BMI</title>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function GetBmi(height, weight) {
+            let bmi = 0;
+            H = height / 100;
+            bmi = weight / (H * H);
+            return bmi;
+        }
+
+        // 初始化
+        function init() {
+            // 當點擊Button(id=Button1)時
+            $('#Button1').click(function (e) {
+                var Height = $('#textHeight').val();    // 取得id="textHeight"的值
+                var Weight = $('#textWeight').val();    // 取得id="textWeight"的值
+                var bmi = GetBmi(Height, Weight);       // 計算 BMI的"函式" 在上面
+
+                $('#result').html(bmi);                 // 把bmi的值 給"span"的 id="result"
+            });
+        }
+
+        // 當程式載入完後
+        $(document).ready(function () {
+            // 初始化
+            init();
+        });
+    </script>
+</head>
+
+<body>
+    <div class="row" style="margin:10px">
+        <div class="col-6">
+            <h1>BMI計算(改成jQuery版本)</h1>
+            <label>身高:</label>
+            <input class="form-control" id="textHeight" value="0" />
+            <label>體重:</label>
+            <input class="form-control" id="textWeight" value="0" />
+            <br />
+            <button class="btn btn-primary" id="Button1">計算</button>
+            <br />
+            <span id="result"></span>
+        </div>
+    </div>
+</body>
+
+</html>
