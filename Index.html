@@ -12,7 +12,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <style>
+        .br15 {
+            border-radius: 15px;
+        }
+
+        .br30 {
+            border-radius: 30px;
+        }
+
+        .br50 {
+            border-radius: 50px;
+        }
+    </style>
+
     <script>
+        // ------BMI計算(改成jQuery版本)-------
         function GetBmi(height, weight) {
             let bmi = 0;
             H = height / 100;
@@ -21,21 +36,58 @@
         }
 
         // 初始化
-        function init() {
+        function init_BMI() {
             // 當點擊Button(id=Button1)時
             $('#Button1').click(function (e) {
-                var Height = $('#textHeight').val();    // 取得id="textHeight"的值
-                var Weight = $('#textWeight').val();    // 取得id="textWeight"的值
-                var bmi = GetBmi(Height, Weight);       // 計算 BMI的"函式" 在上面
+                var Height = $('#textHeight').val(); // 取得id="textHeight"的值
+                var Weight = $('#textWeight').val(); // 取得id="textWeight"的值
+                var bmi = GetBmi(Height, Weight); // 計算 BMI的"函式" 在上面
 
-                $('#result').html(bmi);                 // 把bmi的值 給"span"的 id="result"
+                $('#result1').html(bmi); // 把bmi的值 替換"span"的 id="result1"
+                $('#result2').after("<span style='color: red'>" + bmi +
+                    "</span>"); // 把bmi的值 加在"span"的 id="result2" 之後               
             });
         }
+        // ------------多選-------------------
+        function init_CheckBoxAll() {
+            // 當點擊 id="CheckAll" 時
+            $('#CheckAll').click(function (e) {
+                var check = $("#CheckAll").prop("checked"); // check 讀取id="CheckAll"是否點選，點選為'true'、未點選為'false'
+                $("#CheckBoxGroup input").prop("checked",
+                    check); // 影響 id="CheckBoxGroup" 裡 所有input的checkbox，'check=true'為全選、'check=false'為全未選
+            });
+        }
+        // ------------改變角 為圓弧-------------------
+        function init_changeRD() {
+            $('#sel01').change(function (e) {
+                var val = $(this).val();
+                $('#ImgGroup2 img').removeClass();
+                $('#ImgGroup2 img').addClass(val);
+            });
+        }
+
+        // ------------hover 滑鼠移到圖片放大 離開回復-------------------
+        function init_hover() {
+            $('#ImgHover img').hover(function () {
+                // over 滑鼠移到圖片
+                $(this).css("cursor", "pointer");
+                $(this).css("transform", "scale(1.1)").css("transition", "0.1s")
+            }, function () {
+                // out  滑鼠離開圖片
+                $(this).css("transform", "scale(1)").css("transition", "0.1s")
+            });
+        }
+
+        // ------------------------------------------
+
 
         // 當程式載入完後
         $(document).ready(function () {
             // 初始化
-            init();
+            init_BMI();
+            init_CheckBoxAll();
+            init_changeRD();
+            init_hover()
         });
     </script>
 </head>
@@ -43,7 +95,7 @@
 <body>
     <div class="row" style="margin:10px">
         <div class="col-6">
-            <h1>BMI計算(改成jQuery版本)</h1>
+            <h2>BMI計算(改成jQuery版本)</h2>
             <label>身高:</label>
             <input class="form-control" id="textHeight" value="0" />
             <label>體重:</label>
@@ -51,7 +103,78 @@
             <br />
             <button class="btn btn-primary" id="Button1">計算</button>
             <br />
-            <span id="result"></span>
+            <span id="result1">計算結果: </span>
+            <br />
+            <span id="result2">計算結果: </span>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row" style="margin:10px">
+        <div class="col-12">
+            <h2>按下"勾選全部"則全部勾選，反之全部取消</h2>
+            <input id="CheckAll" type="checkbox" />勾選全部
+            <div id="CheckBoxGroup">
+                <input type="checkbox" />項目1
+                <input type="checkbox" />項目2
+                <input type="checkbox" />項目3
+                <input type="checkbox" />項目4
+                <input type="checkbox" />項目5
+                <input type="checkbox" />項目6
+                <input type="checkbox" />項目7
+                <input type="checkbox" />項目8
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div id="ImgGroup2" class="row" style="margin:10px; padding-top:100px">
+        <div class="col-12">
+            <h2>下拉式選單，改變角變圓弧</h2>
+            <select id="sel01">
+                <option value="br15">15px</option>
+                <option value="br30">30px</option>
+                <option value="br50">50px</option>
+            </select>
+        </div>
+
+        <div class="col-4">
+            <img src="Images/1.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="Images/2.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="Images/3.jpg" style="width:100%" class="img-responsive" />
+        </div>
+    </div>
+
+    <hr />
+
+    <h2>hover 滑鼠移到圖片放大 離開回復</h2>
+    <div id="ImgHover" class="row" style="margin:10px">
+        
+        <div class="col-4">
+            <img src="Images/1.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="Images/2.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="Images/3.jpg" style="width:100%" class="img-responsive" />
+        </div>
+    </div>
+    <div id="ImgHover" class="row" style="margin:10px">
+        <div class="col-4">
+            <img src="Images/4.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="Images/5.jpg" style="width:100%" class="img-responsive" />
+        </div>
+        <div class="col-4">
+            <img src="Images/6.jpg" style="width:100%" class="img-responsive" />
         </div>
     </div>
 </body>
